@@ -1,0 +1,59 @@
+version: "3.8"
+
+name: "cafe"
+services:
+  client:
+    container_name: client
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      cafe_network:
+
+  server:
+    container_name: server
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - database
+    networks:
+      cafe_network:
+
+  database:
+    container_name: database
+    image: postgres:16.3-alpine
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+
+    env_file:
+      - postgres.env
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      cafe_network:
+
+networks:
+  cafe_network:
+
+volumes:
+  postgres_data:
