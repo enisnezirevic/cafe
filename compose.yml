@@ -1,0 +1,54 @@
+name: "cafe"
+services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./client:/app"
+      - "/app/node_modules"
+    networks:
+      cafe_network: { }
+
+  server:
+    container_name: server
+    build:
+      context: "./server"
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./server:/app"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - database
+    networks:
+      cafe_network: { }
+
+  database:
+    container_name: database
+    image: postgres:16.3-alpine
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      cafe_network: { }
+
+networks:
+  cafe_network: { }
+
+volumes:
+  postgres_data: { }
