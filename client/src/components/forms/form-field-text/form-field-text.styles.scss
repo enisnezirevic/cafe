@@ -1,0 +1,36 @@
+@use "../../../styles/text" as t;
+@use "../../../styles/colors" as c;
+@use "../../../styles/shadows" as sh;
+@use "../../../styles/mixins" as mixins;
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  &__label {
+    color: darken(c.$col-text-white, 10%);
+    display: block;
+    font-size: t.$text-sm;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  &__input {
+    border-bottom: 2px solid transparent;
+    @include mixins.input-field(#1E1F22, c.$col-text-white, c.$col-primary, sh.$sm-shadow);
+
+    &::placeholder {
+      color: c.$col-text-white;
+    }
+
+    &--has-error {
+      border-bottom: 2px solid c.$error;
+    }
+  }
+
+  &__error-message {
+    color: c.$error;
+    font-size: t.$text-sm;
+  }
+}
