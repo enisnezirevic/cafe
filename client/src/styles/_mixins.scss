@@ -1,0 +1,45 @@
+@mixin focus($color, $outline-width: 3px, $outline-offset: 2px) {
+  &:focus {
+    outline: $outline-width solid lighten($color, 10%);
+    outline-offset: $outline-offset;
+  }
+}
+
+@mixin transition($properties: all, $duration: 0.1s, $timing: ease-in-out) {
+  transition: $properties $duration $timing;
+}
+
+@mixin button($background-color, $text-color, $box-shadow) {
+  display: block;
+  box-shadow: $box-shadow;
+  padding: 1.4rem;
+  border: none;
+  outline: 1px solid transparent;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  color: $text-color;
+  background-color: $background-color;
+
+  @include focus($background-color);
+  @include transition();
+
+  &:hover {
+    background-color: lighten($background-color, 5%);
+    cursor: pointer;
+  }
+}
+
+@mixin input-field($background-color, $text-color, $focus-color, $box-shadow) {
+  -webkit-appearance: none;
+  background-color: $background-color;
+  color: $text-color;
+  display: block;
+  outline: none;
+  padding: 1.2rem;
+  width: 100%;
+  border-radius: 0.3rem;
+  border: none;
+
+  @include transition();
+  @include focus($focus-color);
+}

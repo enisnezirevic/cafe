@@ -1,0 +1,9 @@
+@use "../../../styles/colors" as c;
+@use "../../../styles/shadows" as sh;
+@use "../../../styles/text" as t;
+@use "../../../styles/mixins" as mixin;
+
+.button {
+  font-size: t.$text-sm;
+  @include mixin.button(c.$col-primary, c.$col-text-white, sh.$sm-shadow)
+}

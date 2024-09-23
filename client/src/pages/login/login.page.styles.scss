@@ -1,0 +1,106 @@
+@use "../../styles/colors" as c;
+@use "../../styles/text" as t;
+@use "../../styles/breakpoints" as b;
+@use "../../styles/mixins" as mixins;
+
+.login-page {
+  &__wrapper {
+    background-image: url("../../assets/backgrounds/auth_login_background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: grid;
+    height: 100%;
+    position: relative;
+
+    @media screen and (min-width: b.$sm) {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__main-logo {
+    display: none;
+    height: 48px;
+    left: 3%;
+    position: absolute;
+    top: 3%;
+    width: 98px;
+
+    @media screen and (min-width: b.$sm) {
+      display: flex;
+    }
+  }
+
+  &__content {
+    background-color: #313338;
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+    height: 100%;
+    padding: 2.4rem;
+
+    @media screen and (min-width: b.$sm) {
+      border-radius: 4px;
+      height: fit-content;
+      padding: 3.2rem;
+      width: 540px;
+    }
+  }
+
+  &__header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  &__title {
+    color: c.$col-text-white;
+    font-size: 2.8rem;
+    font-weight: 600;
+  }
+
+  &__secondary-logo {
+    height: 48px;
+    width: 128px;
+
+    @media screen and (min-width: b.$sm) {
+      display: none;
+    }
+  }
+
+  &__actions {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  &__account-info {
+    color: darken(c.$col-text-white, 10%);
+    display: flex;
+    font-size: t.$text-sm;
+    gap: 0.8rem;
+  }
+
+  &__link {
+    border-radius: 2px;
+    color: c.$col-primary;
+    font-weight: 500;
+    text-decoration: none;
+    @include mixins.focus(c.$col-primary);
+
+    &:hover {
+      color: lighten(c.$col-primary, 10%);
+    }
+  }
+
+  &__text {
+    color: darken(c.$col-text-white, 10%);
+  }
+}
