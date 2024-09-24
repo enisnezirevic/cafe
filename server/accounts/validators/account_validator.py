@@ -1,4 +1,5 @@
 from accounts.models import User
+from accounts.validators.age_validator import AgeValidator
 from accounts.validators.email_validator import EmailValidator
 from accounts.validators.first_name_validator import FirstNameValidator
 from accounts.validators.last_name_validator import LastNameValidator
@@ -21,6 +22,7 @@ class AccountValidator:
             username_regex_pattern=USERNAME_REGEX)
         self.email_validator = EmailValidator(email_regex_pattern=EMAIL_REGEX)
         self.password_validator = PasswordValidator(password_regex=PASSWORD_REGEX)
+        self.age_validator = AgeValidator()
 
     def validate(self, user: User):
         self.firstname_validator.validate(user.first_name)
@@ -28,3 +30,6 @@ class AccountValidator:
         self.username_validator.validate(user.username)
         self.email_validator.validate(user.email)
         self.password_validator.validate(user.password)
+
+    def validate_age_agreement(self, age_agreement: bool):
+        self.age_validator.validate(age_agreement)
