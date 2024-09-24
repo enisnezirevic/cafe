@@ -4,10 +4,20 @@ from accounts.models import User
 from accounts.validators.account_validator import AccountValidator
 
 
+class AgeAgreementField(serializers.BooleanField):
+    def to_internal_value(self, data):
+        value = super().to_internal_value(data)
+        validator = AccountValidator()
+        value = validator.validate_age_agreement(value)
+        return value
+
+
 class CreateUserSerializer(serializers.ModelSerializer):
+    age_agreement = AgeAgreementField()
+
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "username", "email", "password"]
+        fields = ["first_name", "last_name", "username", "email", "password", "age_agreement"]
         extra_kwargs = {
             "password": {
                 "write_only": True,
