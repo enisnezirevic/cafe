@@ -11,7 +11,6 @@ interface FormFieldTextProps {
   error?: FieldError;
 }
 
-
 export const FormFieldText: FC<FormFieldTextProps> = (
   {
     label,
@@ -34,6 +33,5 @@ export const FormFieldText: FC<FormFieldTextProps> = (
       />
       {error && <span className="form-field__error-message">{error.message}</span>}
     </div>
-
   );
 };
