@@ -25,6 +25,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
+        attrs.pop("age_agreement")
+
         validator = AccountValidator()
         user = User(**attrs)
         validator.validate(user)
