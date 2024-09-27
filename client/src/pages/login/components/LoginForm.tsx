@@ -1,8 +1,12 @@
 import styles from "./LoginForm.module.scss";
 import {FormFieldText} from "../../../components/forms/form-field-text/form-field-text.component.tsx";
 import {RegularButton} from "../../../components/buttons/regular-button/regular-button.component.tsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import {useContext} from "react";
+import {UserContext} from "../../../contexts/user.context.tsx";
+import {FormErrorMessage} from "../../../components/forms/form-error-message/FormErrorMessage.component.tsx";
+import {useError} from "../../../hooks/useError.ts";
 
 interface FormValues {
   username: string;
@@ -10,19 +14,31 @@ interface FormValues {
 }
 
 export const LoginForm = () => {
+  const {login} = useContext(UserContext);
+  const {error: loginError, setError: setLoginError, clearError: clearLoginError} = useError();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: {errors},
   } = useForm<FormValues>();
 
-  // #TODO Implement Login logic
-  const submitLogin = (data: FormValues) => {
-    console.log(data);
+  const submitLogin = async (data: FormValues) => {
+    clearLoginError();
+
+    try {
+      await login(data.username, data.password);
+      navigate("/home", {replace: true});
+    } catch (e: any) {
+      setLoginError(e.message);
+    }
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(submitLogin)}>
+      {loginError && <FormErrorMessage errorMessage={loginError}/>}
+
       <FormFieldText
         label="Username"
         type="text"

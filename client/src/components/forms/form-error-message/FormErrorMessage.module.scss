@@ -1,0 +1,18 @@
+@use "../../../styles/colors" as c;
+@use "../../../styles/mixins" as mixins;
+
+.container {
+  align-items: center;
+  background-color: c.$error;
+  border-radius: 0.4rem;
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
+  text-align: center;
+  white-space: break-spaces;
+  @include mixins.transition();
+}
+
+.text {
+  font-weight: 500;
+}
