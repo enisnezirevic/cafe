@@ -8,7 +8,7 @@ import {useForm} from "react-hook-form";
 import {useError} from "../../../hooks/useError.ts";
 import {ApiService} from "../../../services/api.service.ts";
 import {FormErrorMessage} from "../../../components/forms/form-error-message/FormErrorMessage.component.tsx";
-import {useMessage} from "../../../hooks/useMessage.tsx";
+import {useMessage} from "../../../hooks/useMessage.ts";
 import {FormSuccessMessage} from "../../../components/forms/form-success-message/FormSuccessMessage.component.tsx";
 
 interface FormValues {
