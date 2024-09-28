@@ -3,8 +3,13 @@ import {FormFieldText} from "../../../components/forms/form-field-text/form-fiel
 import * as vr from "../../../settings/auth-validation.settings.ts";
 import {FormFieldCheckbox} from "../../../components/forms/form-field-checkbox/form-field-checkbox.component.tsx";
 import {RegularButton} from "../../../components/buttons/regular-button/regular-button.component.tsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import {useError} from "../../../hooks/useError.ts";
+import {ApiService} from "../../../services/api.service.ts";
+import {FormErrorMessage} from "../../../components/forms/form-error-message/FormErrorMessage.component.tsx";
+import {useMessage} from "../../../hooks/useMessage.tsx";
+import {FormSuccessMessage} from "../../../components/forms/form-success-message/FormSuccessMessage.component.tsx";
 
 interface FormValues {
   firstName: string;
@@ -16,6 +21,10 @@ interface FormValues {
 }
 
 export const RegisterForm = () => {
+  const {message, setMessage} = useMessage();
+  const {error, setError, clearError} = useError();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -23,13 +32,34 @@ export const RegisterForm = () => {
     watch
   } = useForm<FormValues>();
 
-  // TODO: Implement registration logic
-  const submitRegister = (data: FormValues) => {
-    console.log(data);
+  const submitRegister = async (data: FormValues) => {
+    clearError();
+
+    try {
+      await ApiService.performRegistration(data);
+
+      let redirectDelay = 5;
+
+      const intervalId = setInterval(() => {
+        setMessage(`Congratulations! You have successfully registered. You will be redirected to the login page in ${redirectDelay} seconds.`);
+
+        redirectDelay -= 1;
+
+        if (redirectDelay <= 0) {
+          clearInterval(intervalId);
+          navigate("/login", {replace: true});
+        }
+      }, 1000);
+    } catch (e: any) {
+      setError(e.message || "An error occurred during registration. Please try again.");
+    }
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(submitRegister)}>
+      {message && <FormSuccessMessage successMessage={message}/>}
+      {error && <FormErrorMessage errorMessage={error}/>}
+
       <FormFieldText
         label="First Name"
         type="text"
