@@ -5,7 +5,7 @@ from accounts.validators.first_name_validator import FirstNameValidator
 from accounts.validators.last_name_validator import LastNameValidator
 from accounts.validators.password_validator import PasswordValidator
 from accounts.validators.username_validator import UsernameValidator
-from settings.validation.account_validation_settings import *
+from settings.validation.account_settings import *
 
 
 class AccountValidator:

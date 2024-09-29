@@ -18,3 +18,6 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,}$')
 
 # Password
 PASSWORD_REGEX = re.compile(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])[A-Za-z0-9#?!@$%^&*-]{8,}$')
+
+# Default User Group
+DEFAULT_GROUP_NAME = "member"

@@ -2,7 +2,7 @@ import pytest
 from rest_framework.exceptions import ValidationError
 
 from accounts.validators.email_validator import EmailValidator
-from settings.validation.account_validation_settings import EMAIL_REGEX
+from settings.validation.account_settings import EMAIL_REGEX
 
 
 def email_validator():
