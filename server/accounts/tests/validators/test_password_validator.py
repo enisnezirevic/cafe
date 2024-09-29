@@ -2,7 +2,7 @@ import pytest
 from rest_framework.exceptions import ValidationError
 
 from accounts.validators.password_validator import PasswordValidator
-from settings.validation.account_validation_settings import PASSWORD_REGEX
+from settings.validation.account_settings import PASSWORD_REGEX
 
 
 def password_validator():

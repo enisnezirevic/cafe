@@ -2,7 +2,7 @@ import pytest
 from rest_framework.exceptions import ValidationError
 
 from accounts.validators.username_validator import UsernameValidator
-from settings.validation.account_validation_settings import USERNAME_REGEX
+from settings.validation.account_settings import USERNAME_REGEX
 
 
 def username_validator(min_length: int, max_length: int):

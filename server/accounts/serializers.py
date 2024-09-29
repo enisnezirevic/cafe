@@ -1,3 +1,5 @@
+from django.contrib.auth.models import Group
+from django.db import transaction
 from rest_framework import serializers
 
 from accounts.models import User
@@ -40,10 +42,18 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = User(**validated_data)
+        try:
+            with transaction.atomic():
+                user = User(**validated_data)
 
-        # Hash password
-        user.set_password(validated_data["password"])
-        user.save()
+                # Hash password
+                user.set_password(validated_data["password"])
+                user.save()
 
-        return True
+                # Assign to group
+                group = Group.objects.get(name="DEFAULT_GROUP_NAME")
+                user.groups.add(group)
+
+                return True
+        except Exception:
+            raise serializers.ValidationError({"detail": "An error occurred during user creation."})
