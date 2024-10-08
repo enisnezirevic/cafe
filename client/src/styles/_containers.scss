@@ -1,0 +1,28 @@
+@use "./breakpoints" as breakpoint;
+
+$standard-padding: 2.4rem;
+
+.main__container {
+  margin: 0 auto;
+  padding: 0 $standard-padding;
+  width: 100%;
+
+  @media (min-width: breakpoint.$sm) {
+    max-width: breakpoint.$md;
+  }
+
+  @media (min-width: breakpoint.$md) {
+    max-width: breakpoint.$lg;
+    padding: 0 $standard-padding * 3;
+  }
+
+  @media (min-width: breakpoint.$lg) {
+    max-width: breakpoint.$xl;
+    padding: 0 $standard-padding * 6;
+  }
+
+  @media (min-width: breakpoint.$xl) {
+    max-width: breakpoint.$xl-2;
+    padding: 0 $standard-padding * 9;
+  }
+}
